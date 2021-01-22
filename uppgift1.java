@@ -2,6 +2,7 @@ package packageUppgift1;
 import java.util.Arrays;
 import java.util.List;
 import java.util.OptionalDouble;
+import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
@@ -122,7 +123,60 @@ public class uppgift1 {
        System.out.println("Minsta värdet är: " + value4);
 
 
+       MyObject[] beta = new MyObject[50];
+       for (int i = 0; i < 50; i++){
+           boolean easy = (Math.random() < 0.5);
+           String[] betaname = arrayFilText.getTextArray().clone();
+           int easy2 = (int)(Math.random() * 1150);
+           beta[i] = new MyObject(easy,(int)(Math.random()*50)+1, betaname[easy2]);
+        };
+
+
+      List<MyObject> myObjectList = Arrays.asList(beta);
+
+      List<MyObject> betaTest = myObjectList
+              .stream()
+              .filter(x -> x.getInt()>20)
+              .collect(Collectors.toList());
+
+
+      List<MyObject> betaTest2 = myObjectList
+                .stream()
+                //.map(s -> s.getBoolean() == true)
+                .filter(s -> s.getBoolean() == true)
+                .map(x -> {x.setString("this is true"); return x;})
+                .collect(Collectors.toList());
+
+       for (int p = 0; p < betaTest.size(); p++){
+            System.out.print(betaTest.get(p).getBoolean()+" ");
+            System.out.print(betaTest.get(p).getInt() +" ");
+            System.out.print(betaTest.get(p).getString()+ " ");
+            System.out.println("");
+        }
+
+      for (int p = 0; p < betaTest2.size(); p++){
+            System.out.print(betaTest2.get(p).getBoolean()+" ");
+            System.out.print(betaTest2.get(p).getInt() +" ");
+            System.out.print(betaTest2.get(p).getString()+ " ");
+            System.out.println("");
+      }
+
+      int[] betaAverage = new int[50];
+      for (int p = 0; p < beta.length; p++){
+         betaAverage[p] = beta[p].getInt();
+      }
+
+
+
+      System.out.println("Medelvärdet på siffrorna är: " + del3average(betaAverage));
+
+
 
     }
+
+    public static double del3average(int[] array) {
+        return Arrays.stream(array).average().orElse(Double.NaN);
+    }
+
 
 }
